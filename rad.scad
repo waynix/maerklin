@@ -7,7 +7,7 @@ laufkranzhoehe = 1.3;
 radgesamthoehe = laufkranzhoehe*2 + raddurchmesser;
 radabstand = 14;
 laufflaeche=2;
-spiel=1;
+spiel=0.5;
 $fn=100;
 module rad()
 {
@@ -25,11 +25,12 @@ module rad()
 module achse()
 {
    translate([0,(radabstand-spiel)/2,0])rotate([90,0,0])cylinder(d=achsendurchmesser,h=radabstand);
-   translate([0,-(radabstand-spiel)/2,0])rotate([90,0,0])rad();
+   translate([0,-(radabstand-spiel*2)/2,0])rotate([90,0,0])rad();
    translate([0,radabstand/2,0])rotate([-90,0,0])rad();
    
 }
 ueberstand=2;
+rotate([0,0,0]){
 difference()
 {
    union()
@@ -44,11 +45,15 @@ difference()
         }
 
     };
-translate([0,0,radgesamthoehe/2]){
-  achse();
-}
-translate([36,0,radgesamthoehe/2]){
-   achse();
+    translate([spiel,0,2.5])
+    {
+        translate([0,0,radgesamthoehe/2]){
+          #achse();
+        }
+        translate([36-spiel,0,radgesamthoehe/2]){
+           achse();
+        }
 }
 
+}
 }
